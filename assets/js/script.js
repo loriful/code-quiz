@@ -190,5 +190,3 @@ var initQuiz = function() {     // load initial screen to start quiz
 initQuiz();
 
 quizWrapper.addEventListener("click", runQuiz);
-  
-            
