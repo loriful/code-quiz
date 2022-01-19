@@ -49,13 +49,19 @@ var displayScores = function() {
 };  // end function displayScores
 
 var endQuiz = function() {
-    // clear last quiz question
+    console.log("In function endQuiz");
+    // clip last question node
+    var lastScreen = document.querySelector("#quiz-next");
+    if (lastScreen) {    
+        lastScreen.remove();
+    } // if
+
     // display final score
     // check for > 0
     // if true build final screen & prompt for initials
     // On submit click, store score and initials in local store
     // display high scores
-    console.log("In function endQuiz");
+   
     if (timer > 0) {
         storeUser();    
     }
@@ -166,8 +172,7 @@ var initQuiz = function() {     // load initial screen to start quiz
 
     console.log("in initQuiz");
 
-    // create initial screan
-    var wrapper = document.getElementById("quiz-box");
+    // var wrapper = document.getElementById("quiz-box");
     var initialQuiz = document.createElement("div");
 
     initialQuiz.id = "quiz-next";
@@ -176,7 +181,7 @@ var initQuiz = function() {     // load initial screen to start quiz
     "<p>Try to answer the following code-related questions within the time limit. Keep in mind that incorrect answers will penalize your score/time by ten seconds!</p>" +
     "<button class='start-btn' id='start-quiz' type='button'>Start Quiz</button>";  
     
-    wrapper.appendChild(initialQuiz);
+    quizWrapper.appendChild(initialQuiz);
 
     displayTime(0);
     

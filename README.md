@@ -1,4 +1,4 @@
-# **Code Quize Site**
+# **Code Quiz Site**
 
 ## **The Repository**
 ### This respository ("code-quiz"):  https://github.com/loriful/code-quiz
