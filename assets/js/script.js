@@ -106,15 +106,17 @@ var displayQuestion = function(num, newNode) {
     console.log("in displayQuestion");
 
     var answerList = document.createElement("div");                 // list of answer buttons
-    var nextAnswer = document.createElement("button");              // each answer button
     var answers = quizArray[num].answerArray;
     
     answerList.id = "button-box";                                   // tag for clicks
 
     newNode.innerHTML = "<h1>" + quizArray[num].questionText + "</h1>";
     
-    
-    for (i = 0; i < answers.length; i++) {                       //build answer buttons}
+    console.log("number of answers " + answers.length);
+
+    for (i = 0; i < answers.length; i++) {                              // build answer buttons           
+        var nextAnswer = document.createElement("button");              // each answer button
+        console.log("in for loop making buttons. I = " + i + answers[i]);
         nextAnswer.innerHTML = "<button class='quiz-btn' id='answer' type='button'>" + answers[i] + "</button>";  
         answerList.appendChild(nextAnswer);                     // add the answer to the list
     }  // for
@@ -164,7 +166,7 @@ var runQuiz = function(event) {
 
     console.log("Time: " + timer);
 
-    endQuiz();
+    // endQuiz();
 
 };  // end function runQuiz
 
@@ -179,7 +181,7 @@ var initQuiz = function() {     // load initial screen to start quiz
 
     initialQuiz.innerHTML = "<h1>Coding Quiz Challenge</h1>" + 
     "<p>Try to answer the following code-related questions within the time limit. Keep in mind that incorrect answers will penalize your score/time by ten seconds!</p>" +
-    "<button class='start-btn' id='start-quiz' type='button'>Start Quiz</button>";  
+    "<button class='quiz-btn' id='start-quiz' type='button'>Start Quiz</button>";  
     
     quizWrapper.appendChild(initialQuiz);
 
