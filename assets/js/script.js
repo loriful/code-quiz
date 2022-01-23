@@ -29,8 +29,8 @@ var quizArray = [
 
 var timer = 30;                                              // Initial clock time, prime start
 var timerEl = document.getElementById('clock');
-
 var totalQuestions = quizArray.length;                      // number of questions
+
 var quizBtn = document.querySelector("#quiz-box");          // start button
 var quizWrapper = document.querySelector("#quiz-box");      // container for quiz screen
 
@@ -51,11 +51,12 @@ var displayScores = function() {
 
 var endQuiz = function() {
     console.log("In function endQuiz");
+    
     // clip last question node
-    var lastScreen = document.querySelector("#quiz-next");
-    if (lastScreen) {    
-        lastScreen.remove();
-    } // if
+    // var lastScreen = document.querySelector("#quiz-next");
+    // if (lastScreen) {    
+    //     lastScreen.remove();
+    // } // if
 
     // display final score
     // check for > 0
@@ -69,12 +70,23 @@ var endQuiz = function() {
     else {
         displayScores();
     }
+    var lastQuiz = document.createElement("div");       // get a new container for last screen
+
+    lastQuiz.id = "quiz-next";                           // set div id
+                                                        // build the screen elements
+    lastQuiz.innerHTML = "<h1>All Done!</h1>" + 
+    "<p>Your final score is " + displayScores + "<b></b>Enter your initials:</p>"  +
+       "<button class='quiz-btn' id='quiz-btn' type='button'>Start Quiz</button>";  
+    
+    quizWrapper.appendChild(lastQuiz);    
+
+    displayTime(0);
+        
 };  // end function endQuiz
 
 var displayTime = function(current) {
     timerEl.textContent = "Time:  " + current;
 };  // end function displayTime
-
 
 var clockTimer = function() {
     
@@ -117,8 +129,8 @@ var clockTimer = function() {
 // };  // end function checkAnswer
 
 var displayQuestion = function(num) {
-
-    console.log("in displayQuestion");
+    
+    console.log("in displayQuestion.  This is num"+ num);
     
     var correctAnswer = quizArray[num].correct;                            // correct answer for current question]
     var answers = quizArray[num].answerArray;                          // all possible answers
@@ -154,7 +166,8 @@ var displayQuestion = function(num) {
     answerEvent.addEventListener("click", function(event) {
          
         var targetBtn = event.target.className;           // Get the element from the event, the answer
-       
+    
+
         // set interval for 10 seconds, if no click return to decrement score &  get next question
         if (timer > 10) { 
             // call setInterval with remaining time
@@ -170,7 +183,8 @@ var displayQuestion = function(num) {
             // decrement score
             // display appended wrong answer screen
             // exit
-        return;   // stop listening
+            
+        return;   
         }
         else if (correctAnswer === targetBtn) {
             console.log("Eureka " + targetBtn + "=" + correctAnswer);
@@ -179,8 +193,9 @@ var displayQuestion = function(num) {
         }  
         
     });   // end click and wait 
-
-    answerEvent.removeEventListener("click", function(event) {} );        // clear for next click
+    
+    
+    // answerEvent.removeEventListener("click", function(event) {} );        // clear for next click
     
         // function check() {
     //     console.log("in show screen check");
@@ -196,34 +211,66 @@ var displayQuestion = function(num) {
     // answerEvent.addEventListener("click", check(), {
     //     once: true
     // });
-
+     
 };  // end function displayQuestion
 
-var runQuiz = function(event) {
-    // event.preventDefault();
+var questionNum = 0;                                            // first question
 
+var runQuiz = function(event) {                                 // get the event for clearing
+    event.preventDefault();                                     // clear the initial click
+  
     console.log("in runQuiz");
     
-    quizBtn.removeEventListener("click", runQuiz);
-
     clockTimer();                                                   // display the start time
-    
-    var questionNum = 0;                                            // first question
+
+    ///////////////////////////////// out of gitHub
     
     var lastScreen = document.querySelector("#quiz-next");          // get last quiz screen
     lastScreen.remove();                                            // clear last quiz screen
     
-    displayQuestion(questionNum);                                   // get the question
+                                     // get the question
                                 
     console.log("back in runQuiz after displayQuestion");
     
-    questionNum++;                                                  // move to the next question
+                                                    // move to the next question
     
-    if (questionNum < totalQuestions && timer < 0) {                             // get all the questions
-        console.log("current question " + questionNum + " total " + totalQuestions);
-        runQuiz();                            
-    }
+    if (questionNum < totalQuestions) {  
+        displayQuestion(questionNum);              // && (timer < 0)
+        questionNum++;                 // get all the questions
+        console.log("are we in the runQuiz IF?  current question " + questionNum + " total " + totalQuestions);
+        runQuiz;                                    // send nothing in
+    };
+ 
+    // endQuiz();    
+
+    ////////////////////////////////// out of gitHub
+
+    // clear the start screen
+
+    // for (var i = 0; i < totalQuestions; i++) {
+         
+    //     var lastScreen = document.querySelector("#quiz-next");          // get last quiz screen
+    //     lastScreen.remove();  
+
+    //                                            // clear last quiz screen
+    //     console.log("this is the array element" + quizArray[questionNum]);
     
+    //     displayQuestion(questionNum);  
+    //     event.preventDefault;
+      
+    //     console.log("back in runQuiz after displayQuestion");
+    
+    //     questionNum++;                                                  // move to the next question
+    
+    //     console.log("current question " + questionNum + " total " + totalQuestions);
+    
+    // }   // for
+    
+
+    // if (questionNum < totalQuestions && timer < 0) {                             // get all the questions
+    //     runQuiz();                            
+    // }
+       
 };  // end function runQuiz
 
 var initQuiz = function() {                             // load initial screen to start quiz
@@ -244,7 +291,6 @@ var initQuiz = function() {                             // load initial screen t
 
 initQuiz();
 
-quizBtn.addEventListener("click", runQuiz);
-
-endQuiz;                                                // display final score and store initials
+quizBtn.addEventListener("click", runQuiz);         
+                                   // display final score and store initials
 console.log("we're all done here");
