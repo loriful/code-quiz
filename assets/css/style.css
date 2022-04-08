@@ -32,7 +32,7 @@ h1 {
   font-size: 28px;
   font-weight: bolder;
   width: 100%;
-  margin: 100px auto 0;
+  margin: 100px auto 10px;
   text-align: center;
 } 
  
@@ -46,9 +46,12 @@ main p  {
 }
 
 /* answer buttons */
-#quiz-btn {
+.btn-box {
   display: flex;
-  flex: 1;
+  flex-wrap: wrap;
+}
+
+.quiz-btn, .start-btn {
   border: none;
   border-radius: 5px;
   background-color: var(--primary-color);
@@ -57,13 +60,17 @@ main p  {
   font-size: 14px;
   line-height: 22px;
   padding: 5px 15px;
-  margin: auto;
+  margin: 2px auto auto 280px;
   text-align: center;
   cursor: pointer;
+}
+
+.start-btn {
   margin: auto;
 }
 
-#quiz-btn:active, #quiz-btn:hover {
+.quiz-btn:active, .quiz-btn:hover, 
+.start-btn:active, .start-btn:hover {
   background-color: var(--secondary-color);
 }
 
@@ -79,7 +86,7 @@ main p  {
     
     .btn {
       font-size: 0.8rem;
-          }
+    }
     .quiz-box {
       padding-top: 50px;
     }
