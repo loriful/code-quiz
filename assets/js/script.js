@@ -27,12 +27,12 @@ var quizArray = [
     }
 ];
 
-var timer = 30;                                              // Initial clock time, prime start
+var timer = 10;                                              // Initial clock time, prime start
 var timerEl = document.getElementById('clock');
 var totalQuestions = quizArray.length;                      // number of questions
 
-var quizBtn = document.querySelector("#quiz-box");          // start button
-var quizWrapper = document.querySelector("#quiz-box");      // container for quiz screen
+
+var quizContainer = document.querySelector("#quiz-box");      // container for quiz screen
 
 var generateBtn = function(answers) {
 
@@ -72,7 +72,7 @@ var endQuiz = function() {
     }
     var lastQuiz = document.createElement("div");       // get a new container for last screen
 
-    lastQuiz.id = "quiz-next";                           // set div id
+    lastQuiz.id = "quiz-box";                           // set div id
                                                         // build the screen elements
     lastQuiz.innerHTML = "<h1>All Done!</h1>" + 
     "<p>Your final score is " + displayScores + "<b></b>Enter your initials:</p>"  +
@@ -137,7 +137,7 @@ var displayQuestion = function(num) {
 
     var wrapper = document.querySelector("#quiz-box"); 
     var newScreen = document.createElement("div");                    // build new quiz screen
-    newScreen.id = "quiz-next";                                       // tag for removal later
+    newScreen.id = "quiz-box";                                       // tag for removal later
 
     var answerList = document.createElement("div");                   // list of answer buttons
     
@@ -217,15 +217,13 @@ var displayQuestion = function(num) {
 var questionNum = 0;                                            // first question
 
 var runQuiz = function(event) {                                 // get the event for clearing
-    event.preventDefault();                                     // clear the initial click
+    // event.preventDefault();                                     // clear the initial click
   
     console.log("in runQuiz");
     
     clockTimer();                                                   // display the start time
-
-    ///////////////////////////////// out of gitHub
     
-    var lastScreen = document.querySelector("#quiz-next");          // get last quiz screen
+    var lastScreen = document.querySelector("#quiz-box");          // get last quiz screen
     lastScreen.remove();                                            // clear last quiz screen
     
                                      // get the question
@@ -277,13 +275,16 @@ var initQuiz = function() {                             // load initial screen t
     
     var initialQuiz = document.createElement("div");    // get a new container for first screen
 
-    initialQuiz.id = "quiz-next";                       // set div id
+    // initialQuiz.id = "quiz-next";                       // set div id
                                                         // build the first screen elements
     initialQuiz.innerHTML = "<h1>Coding Quiz Challenge</h1>" + 
     "<p>Try to answer the following code-related questions within the time limit. Keep in mind that incorrect answers will penalize your score/time by ten seconds!</p>" +
-    "<button class='quiz-btn' id='quiz-btn' type='button'>Start Quiz</button>";  
+    "<button class='quiz-btn' id='quiz-btn' `type='button'>Start Quiz</button>";  
     
-    quizWrapper.appendChild(initialQuiz);    
+    quizContainer.appendChild(initialQuiz);    
+    var quizBtn = document.querySelector("#quiz-box");          // start button
+    console.log("set listener, click button");
+    quizBtn.addEventListener("click", runQuiz);        
 
     displayTime(0);
         
@@ -291,6 +292,4 @@ var initQuiz = function() {                             // load initial screen t
 
 initQuiz();
 
-quizBtn.addEventListener("click", runQuiz);         
                                    // display final score and store initials
-console.log("we're all done here");

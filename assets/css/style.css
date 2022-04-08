@@ -41,19 +41,21 @@ h1 {
   text-align: center;
 } 
  
-.quiz-box  {
+/* instructions & quiz questions */
+main p  {
   font-size: 14px;
   font-weight: bold;
   margin: 10px 300px;
   padding: 0 20px;
   text-align: center;
 }
+/* list of questions */
 li {
   list-style: none;
 }
 
-
-#start-btn, #quiz-btn {
+/* answer buttons */
+#quiz-btn {
   border: none;
   border-radius: 5px;
   background-color: var(--primary-color);
@@ -64,19 +66,11 @@ li {
   padding: 5px 15px;
   margin: 5px 320px 0 320px;
   text-align: center;
-  align-items: flex-start;
+  /* align-items: flex-start; */
   cursor: pointer;
 }
 
-#start-btn {
-  margin: 5px 500px;
-}
-
-#start-btn:active {
-  background-color: var(--secondary-color);
-}
-
-#quiz-btn:active {
+#quiz-btn:active, #quiz-btn:hover {
   background-color: var(--secondary-color);
 }
 
