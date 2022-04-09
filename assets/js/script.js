@@ -3,31 +3,31 @@ var quizArray = [
     arrayObj = {
         questionText: "Commonly used data types DO Not Include:",
         answerArray: ["1. strings", "2. booleans", "3. alerts", "4. numbers"],
-        correct: "2"
+        correct: "3"
     },
     arrayObj = {
         questionText: "The condition in an if/else statement is enclosed with __________.",
         answerArray: ["1. quotes", "2. curly brackets", "3. parenthesis", "4. square brackets"],
-        correct: "2"
+        correct: "3"
     },
     arrayObj = {
         questionText: "Arrays in JavaScript can be used to store __________.",
         answerArray: ["1. numbers and strings", "2. other arrays", "3. booleans", "4. all of the above"],
-        correct: "3"
+        correct: "4"
     },
     arrayObj = {
         questionText: "String values must be enclosed within __________ when being assigned to variables.",
         answerArray: ["1. commas", "2. curly brackets", "3. quotes", "4. parenthesis"],
-        correct: "2"
+        correct: "3"
     },
     arrayObj = {
         questionText: "A very useful tool used during development and debugging for printing content to the debugger is:",
         answerArray: ["1. JavaScript", "2. terminal/bash", "3. for loops", "4. console.log"],
-        correct: "3"
+        correct: "4"
     }
 ];
 
-var timer = 1;                                              // Initial clock time, prime start
+var timer = 20;                                            // Initial clock time, prime start
 var timerEl = document.getElementById('clock');
 var totalQuestions = quizArray.length;                      // number of questions
 
@@ -86,31 +86,21 @@ var displayTime = function(current) {
     timerEl.textContent = "Time:  " + current;
 };  // end function displayTime
 
-var clockTimer = function() {
+var clockTimer = function(timer) {
     
-    console.log("in function clockTimer");  
+    console.log("in function clockTimer. Timer = " + timer);  
     // count down the time
-    var timeInterval = setInterval(function () {
-        // As long as the `timeLeft` is greater than 1
-        console.log("in setInterval");
-        if (timer > 0) {
-          // Set the `textContent` of `timerEl` to show the remaining seconds
-          displayTime(timer);
-        // Decrement `timeLeft` by 1
-          timer--;
-        } else {
-          // Use `clearInterval()` to stop the timer
-          clearInterval(timeInterval);
-          // Call the `displayMessage()` function
-          displayTime(timer);
-        }
-      }, 1000);
+
     
-    console.log("timer = " + timer);
+    ///////////////////////////////////////////////////////////////////////////////////
+   
+    //   setTimeout(() => { clearInterval(runClock); }, timer);
     
+        
 // Use the `setInterval()` method to call a function to be executed every 1000 milliseconds
 
 };   // end function clockTimer
+
 
 // var checkAnswer = function (event) {
 //     var num = 0;            // tTODO esting only, pass into function later after event us understoog
@@ -127,12 +117,45 @@ var clockTimer = function() {
 // };  // end function checkAnswer
 
 var displayQuestion = function(num) {
+    var waitForAnswer = function() {
+        console.log('waitForAnswer');
+        if (timer > 0) {
+        displayTime(timer);
+        timer--;
+        } else {
+            clearInterval(runClock);
+            displayTime(timer);
+        };
     
-    console.log("in displayQuestion.  This is num"+ num);
+    }; // end waitForAnswer    
     
-    var correctAnswer = quizArray[num].correct;                            // correct answer for current question]
+    var checkAnswer = function(event) {
+    
+        console.log("in checkAnswer");
+        clearInterval(runClock);
+        answer = event.target.value;
+    
+       
+        // Get the element from the event, the answer
+        var answer = event.target.value;
+        console.log('clicked ' + answer);
+        console.log('correct = ' + correctAnswer);
+    
+        if (answer === correctAnswer) {
+            console.log('EUREKA answer = ' + answer);
+            
+        } else {
+            console.log('wah wah WRONG');
+         
+        };
+     
+    }; // end checkAnswer  
+    
+    
+    // console.log("in displayQuestion.  This is num"+ num);
+    
     var answers = quizArray[num].answerArray;                          // all possible answers
-
+    var correctAnswer = quizArray[num].correct;        
     var wrapper = document.querySelector("#quiz-box");                  // parent element
     var newScreen = document.createElement("div");                    // build new quiz screen
     // newScreen.className = "btn-box";        
@@ -141,13 +164,15 @@ var displayQuestion = function(num) {
     // var answerList = document.createElement("div");                   // list of answer buttons
     // answerList.innerHTML = "class='btn-box' id='btn-box'";                                   // tag for clicks
     // console.log("number of answers " + answers.length);
-
+    var buttonBox = document.createElement("div");              // wrapper for all buttons
+    buttonBox.id = "btn-box";
+    newScreen.appendChild(buttonBox);
     for (i = 0; i < answers.length; i++) {  
         
         var btnWrap = document.createElement("div");             //wrapper for button
         btnWrap.className = "btn-box";
-        btnWrap.innerHTML =  "<button class=quiz-btn id=quiz-btn type=button value=" + i + ">" + answers[i] + "</button>";
-        newScreen.appendChild(btnWrap);                      // add the answer to the list
+        btnWrap.innerHTML =  "<button class=quiz-btn id=quiz-btn type=button value=" + (i+1) + ">" + answers[i] + "</button>";
+        buttonBox.appendChild(btnWrap);                      // add the answer to the list
         
         // var nextAnswer = document.createElement("button");        // each answer button
         // nextAnswer.innerHTML =
@@ -161,40 +186,41 @@ var displayQuestion = function(num) {
 
     wrapper.appendChild(newScreen);
 
-    var answerEvent = document.querySelector("#quiz-btn");
-    var timesUp = false;
+    var answerList = document.querySelector("#btn-box");
+ 
+    var runClock = setInterval(waitForAnswer, 1000);
+    answerList.addEventListener("click", checkAnswer);
+    
+    //////////////////
 
-    answerEvent.addEventListener("click", function(event) {
-        var targetBtn = event.target.value;           // Get the element from the event, the answer
     
+            //              // function to add Correct to screen
+            //              // save time left go to next question
+            //              clearInterval(runClock);
+            //          } else {
+            //              console.log('wah wah WRONG');
+            //              timer = timer - interval;
+            //              clearInterval(runClock);
+            //          };    
+            //     };  // check match
+            // interval++;  
+            // timer--;
+       
+        // } // if time left
+        // else {
+        //     displayTime(timer);
+        //     clearInterval(runClock);
+        // } //else
+        // };  // end checkForAnswer
 
-        // set interval for 10 seconds, if no click return to decrement score &  get next question
-        if (timer > 10) { 
-            // call setInterval with remaining time
-            timesUp = true;
-        }
-        else    {
-            // call setInterval for 10 seconds
-            timesUp = true;
-        }
-        
-        // targetBtn is null if no click after 10 seconds
-        if (!targetBtn && timesUp) {
-            // decrement score
-            // display appended wrong answer screen
-            // exit
-            
-        return;   
-        }
-        else if (correctAnswer === targetBtn) {
-            console.log("Eureka " + targetBtn + "=" + correctAnswer);
-            // display append correct answer screen
-            return;          // all done
-        }  
-        
-    });   // end click and wait 
+           
+        // answerList.addEventListener("click", checkAnswer);
     
-    
+    //     console.log('this is the one ' + answerList.target.value);
+    // console.log('this is timer', timer);
+    //  if (!timer) {
+    //      console.log('game over');
+    //  }
     // answerEvent.removeEventListener("click", function(event) {} );        // clear for next click
     
         // function check() {
@@ -211,22 +237,23 @@ var displayQuestion = function(num) {
     // answerEvent.addEventListener("click", check(), {
     //     once: true
     // });
-     
+    
+
 };  // end function displayQuestion
 
+/////////////////////////////////////////////////////////////
 var questionNum = 0;                                            // first question
 
-var runQuiz = function(event) {                                 // get the event for clearing
-    event.preventDefault();                                     // clear the initial click
-  
-    console.log("in runQuiz");
+var runQuiz = function () {                                 // get the event for clearing
     
-    clockTimer();                                                   // display the start time
+    // event.preventDefault();                                     // clear the initial click   
+    console.log("in runQuiz");
 
     ///////////////////////////////// out of gitHub
     
     var lastScreen = document.querySelector("#quiz-next");          // get last quiz screen
-    lastScreen.remove();                                            // clear last quiz screen
+    lastScreen.remove();      
+                                          // clear last quiz screen
     
                                      // get the question
                                 
@@ -234,13 +261,22 @@ var runQuiz = function(event) {                                 // get the event
     
                                                     // move to the next question
     
-    if (questionNum < totalQuestions) {  
-        displayQuestion(questionNum);              // && (timer < 0)
-        questionNum++;                 // get all the questions
-        console.log("are we in the runQuiz IF?  current question " + questionNum + " total " + totalQuestions);
-        // runQuiz;                                    // send nothing in
-    };
- 
+       if (questionNum < totalQuestions) {  
+            console.log("question number= " + questionNum + "  totalQuestions = " + totalQuestions);
+            displayQuestion(questionNum);              // && (timer < 0)
+            console.log('back from displayQuestion');
+            questionNum++;
+            // if (questionNum < totalQuestions) {      // get all the questions                            // send nothing in
+            //     runQuiz();
+            // };
+        };
+        // } else {
+        // displayTime(timer);   
+        // console.log("all questions have been processed");
+        // return;
+        // // call end game functions
+        // }
+
     // endQuiz();    
 
     ////////////////////////////////// out of gitHub
@@ -286,14 +322,14 @@ var initQuiz = function() {
     "<div class=btn-box>" + "<button class=start-btn id=start-btn type=button>Start Quiz</button>" + "</div>";  
     
     quizWrapper.appendChild(initialQuiz);   
-
-    var quizBtn = document.querySelector("#start-btn");          // start button
     
     displayTime(0);
-
+    var quizBtn = document.querySelector("#start-btn");          // start button
     quizBtn.addEventListener("click", runQuiz);         
         
 };  // end function initQuiz
+
+////////////////////////////////////////////////////
 
 initQuiz();
 
