@@ -27,15 +27,19 @@ header {
   padding-right: 2px;  
 }
 
-/* Initial header & quiz questions */
 h1 {
   font-size: 28px;
   font-weight: bolder;
-  width: 100%;
   margin: 100px auto 10px;
   text-align: center;
-} 
- 
+}
+
+
+/* quiz questions header */
+.quiz-header {
+  margin: 100px 260px 10px 385px;
+  text-align: left;} 
+
 /* instructions */
 main p  {
   font-size: 14px;
@@ -60,7 +64,7 @@ main p  {
   font-size: 14px;
   line-height: 22px;
   padding: 5px 15px;
-  margin: 2px auto auto 280px;
+  margin: 2px auto 2px 380px;
   text-align: center;
   cursor: pointer;
 }
@@ -74,29 +78,57 @@ main p  {
 .submit-btn:active, .submit-btn:hover {
   background-color: var(--secondary-color);
 }
+
 .answer-box {
-  display: flex;
-  flex-wrap: nowrap;
-  margin: auto 600px;
+  margin: 30px 260px auto 385px;
   font-size: 28px;
-  width: 100%;
-  text-align: center;
+  font-style: italic;
+  padding: 10px;
+  color: gray;
+  text-align: left;
+  border-top: solid 2px;
 }
 
-  @media (max-width: 690px) {
-    .btn {
-      font-size: 1rem;
-      margin: 16px 0px 0px 0px;
-      padding: 10px 15px;
+  @media (max-width: 690px), (max-width: 900px) {
+    #scores {
+      margin: auto;
+      display: block;
+      text-align: left;
+      color: var(--secondary-color); */
+      padding-right: 1px;
     }
-  }
-  
-  @media (max-width: 500px) {
     
-    .btn {
-      font-size: 0.8rem;
+    .clock {
+      display: block;
+      margin: auto;
+      text-align: left;
+      padding-left: 6px;  
     }
-    .quiz-box {
-      padding-top: 50px;
+    
+  h1 {
+    font-size: 20px;
+    margin: auto;
+    }
+
+  .quiz-header {
+    font-size: 20px;
+    margin: auto;
+  }
+
+  main p {
+    font-size: 15px;
+    margin: auto;
+  }
+
+  .answer-box {
+    margin: auto;
+    font-size: 20px;
+  }
+
+  .start-btn, .submit-btn, .quiz-btn {
+      font-size: 1rem;
+      margin: 2px auto 2px auto;
+      text-align: center;
+      padding: 10px 15px;
     }
   }

@@ -1,33 +1,33 @@
 // quiz questions & answers
 var quizArray = [
     arrayObj = {
-        questionText: "1. Commonly used data types DO Not Include:",
+        questionText: "Commonly used data types DO Not Include:",
         answerArray: ["1. strings", "2. booleans", "3. alerts", "4. numbers"],
         correct: "3"
     },
     arrayObj = {
-        questionText: "2. The condition in an if/else statement is enclosed with __________.",
+        questionText: "The condition in an if/else statement is enclosed with __________.",
         answerArray: ["1. quotes", "2. curly brackets", "3. parenthesis", "4. square brackets"],
         correct: "3"
     },
     arrayObj = {
-        questionText: "3. Arrays in JavaScript can be used to store __________.",
+        questionText: "Arrays in JavaScript can be used to store __________.",
         answerArray: ["1. numbers and strings", "2. other arrays", "3. booleans", "4. all of the above"],
         correct: "4"
     },
     arrayObj = {
-        questionText: "4. String values must be enclosed within __________ when being assigned to variables.",
+        questionText: "String values must be enclosed within __________ when being assigned to variables.",
         answerArray: ["1. commas", "2. curly brackets", "3. quotes", "4. parenthesis"],
         correct: "3"
     },
     arrayObj = {
-        questionText: "5. A very useful tool used during development and debugging for printing content to the debugger is:",
+        questionText: "A very useful tool used during development and debugging for printing content to the debugger is:",
         answerArray: ["1. JavaScript", "2. terminal/bash", "3. for loops", "4. console.log"],
         correct: "4"
     }
 ];
 
-var timer = quizArray.length * 10;                 // Initial clock time, 10 seconds per question.
+var timer = (quizArray.length * 10) + 10;             // Initial clock time, 10 seconds per question, and 10 extra
 var timerEl = document.getElementById('clock');
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -101,7 +101,7 @@ function buildAnswer (report, num) {
         intervalTimer--;
         if (intervalTimer < 1) {                            // go to next question or end quiz
             clearInterval(runWait);
-            if (num < quizArray.length-1) {
+            if ((num < quizArray.length-1) && (timer > 1)) {
                 num++;
                 runQuiz(num);
             } else { 
@@ -120,6 +120,7 @@ function checkAnswer (pick, correct, num) {
     if (pick === correct) {  
         matched = true;
        } else {
+        timer = timer-10;
         matched = false;
        };
     // console.log('match = ' + matched);
@@ -165,7 +166,7 @@ function loadQuestions (num) {
     
     var newScreen = document.createElement("div");           // build new quiz screen
     newScreen.id = "quiz-next";                              // tag for removal later
-    newScreen.innerHTML = "<h1>" + quizArray[num].questionText + "</h1>";
+    newScreen.innerHTML = "<h1 class=quiz-header>" + quizArray[num].questionText + "</h1>";
     
     // var buttonBox = document.createElement("div");              // wrapper for all buttons
     // buttonBox.id = "answer-box";
