@@ -1,315 +1,225 @@
 // quiz questions & answers
 var quizArray = [
     arrayObj = {
-        questionText: "Commonly used data types DO Not Include:",
+        questionText: "1. Commonly used data types DO Not Include:",
         answerArray: ["1. strings", "2. booleans", "3. alerts", "4. numbers"],
         correct: "3"
     },
     arrayObj = {
-        questionText: "The condition in an if/else statement is enclosed with __________.",
+        questionText: "2. The condition in an if/else statement is enclosed with __________.",
         answerArray: ["1. quotes", "2. curly brackets", "3. parenthesis", "4. square brackets"],
         correct: "3"
     },
     arrayObj = {
-        questionText: "Arrays in JavaScript can be used to store __________.",
+        questionText: "3. Arrays in JavaScript can be used to store __________.",
         answerArray: ["1. numbers and strings", "2. other arrays", "3. booleans", "4. all of the above"],
         correct: "4"
     },
     arrayObj = {
-        questionText: "String values must be enclosed within __________ when being assigned to variables.",
+        questionText: "4. String values must be enclosed within __________ when being assigned to variables.",
         answerArray: ["1. commas", "2. curly brackets", "3. quotes", "4. parenthesis"],
         correct: "3"
     },
     arrayObj = {
-        questionText: "A very useful tool used during development and debugging for printing content to the debugger is:",
+        questionText: "5. A very useful tool used during development and debugging for printing content to the debugger is:",
         answerArray: ["1. JavaScript", "2. terminal/bash", "3. for loops", "4. console.log"],
         correct: "4"
     }
 ];
 
-var timer = 20;                                            // Initial clock time, prime start
+var timer = quizArray.length * 10;                 // Initial clock time, 10 seconds per question.
 var timerEl = document.getElementById('clock');
-var totalQuestions = quizArray.length;                      // number of questions
 
 /////////////////////////////////////////////////////////////////////////////////////////
-var generateBtn = function(answers) {
-
-    console.log("in generateBtn" + answers);
-
-};  // end function generateBtn
-
-var storeUser = function() {
+function storeUser () {
     console.log("storeUser function");
 };  // end function storeUser
 
-var displayScores = function() {
-    var userInits = "";  
+function displayScores () {
     console.log("in displayScores");
 };  // end function displayScores
 
-var endQuiz = function() {
-    console.log("In function endQuiz");
+function endQuiz () {
+    // console.log("In function endQuiz");
     
-    // clip last question node
-    // var lastScreen = document.querySelector("#quiz-next");
-    // if (lastScreen) {    
-    //     lastScreen.remove();
-    // } // if
-
     // display final score
     // check for > 0
     // if true build final screen & prompt for initials
     // On submit click, store score and initials in local store
     // display high scores
-   
-    if (timer > 0) {
+
+   // clip last screen
+    document.querySelector("#quiz-next").remove();          // clear last quiz screen
+
+    if (timer > 0) {                                    // user has points
         storeUser();    
     }
     else {
         displayScores();
     }
     var lastQuiz = document.createElement("div");       // get a new container for last screen
-
-    lastQuiz.id = "quiz-next";                           // set div id
+    lastQuiz.id = "quiz-next";                           
                                                         // build the screen elements
     lastQuiz.innerHTML = "<h1>All Done!</h1>" + 
-    "<p>Your final score is " + displayScores + "<b></b>Enter your initials:</p>"  +
-       "<button class='quiz-btn' id='quiz-btn' type='button'>Start Quiz</button>";  
-    
-    quizWrapper.appendChild(lastQuiz);    
-
+    "<p>Your final score is: " + displayScores() + "<br><br>Enter your initials:</p>"
+      + "<div class=btn-box><button class='submit-btn' id='submit-btn' type='button'>Submit</button></div>";   
+      
+    document.getElementById("quiz-box").appendChild(lastQuiz);   // display 
+  
     displayTime(0);
         
 };  // end function endQuiz
 
-var displayTime = function(current) {
+function displayTime (current) {
+    // show the clock timer
     timerEl.textContent = "Time:  " + current;
 };  // end function displayTime
 
-var clockTimer = function(timer) {
+// function clockTimer (timer) {
     
-    console.log("in function clockTimer. Timer = " + timer);  
-    // count down the time
+//     console.log("in function clockTimer. Timer = " + timer);  
+//     // count down the time
 
+// };   // end function clockTimer
+
+function buildAnswer (report, num) {
+    // (the result, the number of current question)
+    // console.log('in buildAnswer');
+    // build the display
+    var answerEl = document.createElement("div");
+    answerEl.className = "answer-box";
+
+    if (report) {
+        answerEl.innerHTML = "CORRECT!";
+    } else { 
+        answerEl.innerHTML = "WRONG!"; 
+        };
+
+    document.getElementById("quiz-next").appendChild(answerEl);         // show result
+    var intervalTimer = 1;                                  // wait for user to see result
+    var runWait = setInterval(function () {
+        intervalTimer--;
+        if (intervalTimer < 1) {                            // go to next question or end quiz
+            clearInterval(runWait);
+            if (num < quizArray.length-1) {
+                num++;
+                runQuiz(num);
+            } else { 
+                endQuiz();
+            }
+        };
+    }, 1000);
+
+} // end function buildAnswer
+
+function checkAnswer (pick, correct, num) {
+    // (the answer chosen, the stored correct answer, which question)
+    var matched; 
+    // console.log('in CheckAnswer');
     
-    ///////////////////////////////////////////////////////////////////////////////////
+    if (pick === correct) {  
+        matched = true;
+       } else {
+        matched = false;
+       };
+    // console.log('match = ' + matched);
+    buildAnswer(matched, num);              // display the result for each question
+    // return selection;
+
+} // end checkAnswer
+
+function getAnswer (correct, num) {
+
+    // console.log('in getAnswer this is correct ' + correct + 'this is num ' + num);
+
+    var intervalTimer = 10;                     // ten seconds per question
+    
+    if (timer < intervalTimer) {                // less than 10 seconds left
+        intervalTimer = timer;
+    };
    
-    //   setTimeout(() => { clearInterval(runClock); }, timer);
-    
-        
-// Use the `setInterval()` method to call a function to be executed every 1000 milliseconds
-
-};   // end function clockTimer
-
-
-// var checkAnswer = function (event) {
-//     var num = 0;            // tTODO esting only, pass into function later after event us understoog
-   
-//     var targetBtn = event.target;           // Get the element from the event, the answer
-    
-//     console.log("targetBtn "+ targetBtn + " correct answer " + quizArray[num].correct);
-
-//     if (targetBtn === (quizArray[num].correct)) {         // Does target match correct answer
-        
-//         alert("matched" + targetBtn + " " + quizArray[num].correct);
-//     } // if
-
-// };  // end function checkAnswer
-
-var displayQuestion = function(num) {
-    var waitForAnswer = function() {
-        console.log('waitForAnswer');
-        if (timer > 0) {
-        displayTime(timer);
-        timer--;
-        } else {
+    var runClock = setInterval(function () {        // run the clock, wait for answer
+        intervalTimer--;
+        displayTime(timer--);
+        if (intervalTimer < 1) {                    // out of time
             clearInterval(runClock);
-            displayTime(timer);
+            // console.log("timer has run out");
+            return checkAnswer("", correct, num);   // determine if answer correct
         };
-    
-    }; // end waitForAnswer    
-    
-    var checkAnswer = function(event) {
-    
-        console.log("in checkAnswer");
+        // console.log('Time Interval: ' + intervalTimer);
+    }, 1000);
+    // document.querySelectorAll('.some-class').forEach(item => {
+    //     item.addEventListener('click', event => {
+    document.querySelectorAll("#quiz-btn").forEach(item => {        // listen on each answer button
+        item.addEventListener("click", function () {  
         clearInterval(runClock);
-        answer = event.target.value;
+        // console.log('target = ' + event.target.value);
+        checkAnswer(event.target.value, correct, num);             // button clicked, check answer
+    }, { once:true } )});
+  
+}; // end getAnswer
+  
+function loadQuestions (num) {
+
+    // console.log('function loadQuestions');
     
-       
-        // Get the element from the event, the answer
-        var answer = event.target.value;
-        console.log('clicked ' + answer);
-        console.log('correct = ' + correctAnswer);
-    
-        if (answer === correctAnswer) {
-            console.log('EUREKA answer = ' + answer);
-            
-        } else {
-            console.log('wah wah WRONG');
-         
-        };
-     
-    }; // end checkAnswer  
-    
-    
-    // console.log("in displayQuestion.  This is num"+ num);
-    
-    var answers = quizArray[num].answerArray;                          // all possible answers
-    var correctAnswer = quizArray[num].correct;        
-    var wrapper = document.querySelector("#quiz-box");                  // parent element
-    var newScreen = document.createElement("div");                    // build new quiz screen
-    // newScreen.className = "btn-box";        
+    var newScreen = document.createElement("div");           // build new quiz screen
     newScreen.id = "quiz-next";                              // tag for removal later
     newScreen.innerHTML = "<h1>" + quizArray[num].questionText + "</h1>";
-    // var answerList = document.createElement("div");                   // list of answer buttons
-    // answerList.innerHTML = "class='btn-box' id='btn-box'";                                   // tag for clicks
-    // console.log("number of answers " + answers.length);
-    var buttonBox = document.createElement("div");              // wrapper for all buttons
-    buttonBox.id = "btn-box";
-    newScreen.appendChild(buttonBox);
-    for (i = 0; i < answers.length; i++) {  
-        
+    
+    // var buttonBox = document.createElement("div");              // wrapper for all buttons
+    // buttonBox.id = "answer-box";
+    // build the set of possible answers
+    for (i = 0; i < quizArray[num].answerArray.length; i++) {      
         var btnWrap = document.createElement("div");             //wrapper for button
-        btnWrap.className = "btn-box";
-        btnWrap.innerHTML =  "<button class=quiz-btn id=quiz-btn type=button value=" + (i+1) + ">" + answers[i] + "</button>";
-        buttonBox.appendChild(btnWrap);                      // add the answer to the list
-        
-        // var nextAnswer = document.createElement("button");        // each answer button
-        // nextAnswer.innerHTML =
-        // nextAnswer.setAttribute("data-answer-num",i);  
-        // newScreen.appendChild(nextAnswer)
-        // console.log("in for loop making buttons. I = " + i + answers[i]);
-                           
+        btnWrap.id = "btn-box";
+        btnWrap.innerHTML =  "<button class=quiz-btn id=quiz-btn type=button value=" + (i+1) + ">" + quizArray[num].answerArray[i] + "</button>";
+        newScreen.appendChild(btnWrap);                      // add the answer to the list                      
     }  // for
-    
-    // newScreen.appendChild(answerList);
 
-    wrapper.appendChild(newScreen);
+    // newScreen.appendChild(buttonBox);
 
-    var answerList = document.querySelector("#btn-box");
- 
-    var runClock = setInterval(waitForAnswer, 1000);
-    answerList.addEventListener("click", checkAnswer);
-    
-    //////////////////
+    document.querySelector("#quiz-box").appendChild(newScreen);     // display the set
+    // console.log('this is correct', question.correct);
+    // console.log('about to call getAnswer, num = ' + num);
+    return quizArray[num].correct;                              // send the correct answer to getAnswer
+    // getAnswer(quizArray[num].correct,num);
 
-    
-            //              // function to add Correct to screen
-            //              // save time left go to next question
-            //              clearInterval(runClock);
-            //          } else {
-            //              console.log('wah wah WRONG');
-            //              timer = timer - interval;
-            //              clearInterval(runClock);
-            //          };    
-            //     };  // check match
-            // interval++;  
-            // timer--;
-       
-        // } // if time left
-        // else {
-        //     displayTime(timer);
-        //     clearInterval(runClock);
-        // } //else
-        // };  // end checkForAnswer
+}; // end loadQuestions
 
-           
-        // answerList.addEventListener("click", checkAnswer);
+function runQuiz (num) {                                 
+    ////////////// REPEAT UNTIL ALL QUESTIONS DISPLAYED OR TIME RUNS OUT
+    // console.log("in runQuiz, this is num " + num);
+   
+    document.querySelector("#quiz-next").remove();          // clear last quiz screen
     
-    //     console.log('this is the one ' + answerList.target.value);
-    // console.log('this is timer', timer);
-    //  if (!timer) {
-    //      console.log('game over');
-    //  }
-    // answerEvent.removeEventListener("click", function(event) {} );        // clear for next click
-    
-        // function check() {
-    //     console.log("in show screen check");
-    //     if (showScreen) {
-    //         setTimeout(check, 10000);                   // give 10 seconds per screen
-    //         console.log("in show screen loop");
+    getAnswer(loadQuestions(num), num);                     // load each set of questions
+
+    // check if done
+    // if (num === quizArray.length || timer < 0) {
+    //     console.log('quizArray.length = ' + quizArray.length);
+    //     console.log("num in if " + num);
+    //     console.log('time to call endQuiz after loadQuestions & getAnswer');  
+    //     return; 
+    // };
+
+    // if (timer < 1) {
+
+    //     if (num > (quizArray.length)) {
+    //         runQuiz(num);    
+    //         num++;
+    //         // if (num === (quizArray.length)) {
+    //         //     console.log('num ' + num);
+    //             // return;
+    //     } else {
+    //     console.log('end of quiz, show score, etc.');
+    //     console.log('this is the score ' + timer);
+    //     return;
     //     }
-    // }  // end function check
+    // }; 
+};
 
-    // function stop() {
-    //     showScreen = false;
-    // }
-    // answerEvent.addEventListener("click", check(), {
-    //     once: true
-    // });
-    
-
-};  // end function displayQuestion
-
-/////////////////////////////////////////////////////////////
-var questionNum = 0;                                            // first question
-
-var runQuiz = function () {                                 // get the event for clearing
-    
-    // event.preventDefault();                                     // clear the initial click   
-    console.log("in runQuiz");
-
-    ///////////////////////////////// out of gitHub
-    
-    var lastScreen = document.querySelector("#quiz-next");          // get last quiz screen
-    lastScreen.remove();      
-                                          // clear last quiz screen
-    
-                                     // get the question
-                                
-    // console.log("back in runQuiz after displayQuestion");
-    
-                                                    // move to the next question
-    
-       if (questionNum < totalQuestions) {  
-            console.log("question number= " + questionNum + "  totalQuestions = " + totalQuestions);
-            displayQuestion(questionNum);              // && (timer < 0)
-            console.log('back from displayQuestion');
-            questionNum++;
-            // if (questionNum < totalQuestions) {      // get all the questions                            // send nothing in
-            //     runQuiz();
-            // };
-        };
-        // } else {
-        // displayTime(timer);   
-        // console.log("all questions have been processed");
-        // return;
-        // // call end game functions
-        // }
-
-    // endQuiz();    
-
-    ////////////////////////////////// out of gitHub
-
-    // clear the start screen
-
-    // for (var i = 0; i < totalQuestions; i++) {
-         
-    //     var lastScreen = document.querySelector("#quiz-next");          // get last quiz screen
-    //     lastScreen.remove();  
-
-    //                                            // clear last quiz screen
-    //     console.log("this is the array element" + quizArray[questionNum]);
-    
-    //     displayQuestion(questionNum);  
-    //     event.preventDefault;
-      
-    //     console.log("back in runQuiz after displayQuestion");
-    
-    //     questionNum++;                                                  // move to the next question
-    
-    //     console.log("current question " + questionNum + " total " + totalQuestions);
-    
-    // }   // for
-    
-
-    // if (questionNum < totalQuestions && timer < 0) {                             // get all the questions
-    //     runQuiz();                            
-    // }
-       
-};  // end function runQuiz
-
-var initQuiz = function() {   
+function initQuiz() {   
 
      // load initial screen to start quiz
     var quizWrapper = document.querySelector("#quiz-box");          // container for quiz screen
@@ -318,21 +228,17 @@ var initQuiz = function() {
     initialQuiz.id = "quiz-next";                       // set div id
                                                         // build the first screen elements
     initialQuiz.innerHTML = "<h1>Coding Quiz Challenge</h1>" + 
-    "<p>Try to answer the following code-related questions within the time limit. Keep in mind that incorrect answers will penalize your score/time by ten seconds!</p>" + 
-    "<div class=btn-box>" + "<button class=start-btn id=start-btn type=button>Start Quiz</button>" + "</div>";  
+    "<p>Try to answer the following code-related questions within the time limit.  You have 10 seconds for each question. Keep in mind that incorrect answers will penalize your score/time by ten seconds!</p>" +
+    "<div class=btn-box><button class=start-btn id=start-btn type=button>Start Quiz</button></div>";  
     
-    quizWrapper.appendChild(initialQuiz);   
+    quizWrapper.appendChild(initialQuiz);           // display the first screen
     
     displayTime(0);
-    var quizBtn = document.querySelector("#start-btn");          // start button
-    quizBtn.addEventListener("click", runQuiz);         
-        
+                                                    // listen for start
+    document.getElementById("start-btn").addEventListener("click", () => { runQuiz(0); });        // start button
+
 };  // end function initQuiz
 
 ////////////////////////////////////////////////////
 
 initQuiz();
-
-
-                                   // display final score and store initials
-console.log("we're all done here");

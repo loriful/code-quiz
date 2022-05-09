@@ -51,7 +51,7 @@ main p  {
   flex-wrap: wrap;
 }
 
-.quiz-btn, .start-btn {
+.start-btn, .submit-btn, .quiz-btn {
   border: none;
   border-radius: 5px;
   background-color: var(--primary-color);
@@ -65,13 +65,22 @@ main p  {
   cursor: pointer;
 }
 
-.start-btn {
+.start-btn, .submit-btn {
   margin: auto;
 }
 
 .quiz-btn:active, .quiz-btn:hover, 
-.start-btn:active, .start-btn:hover {
+.start-btn:active, .start-btn:hover,
+.submit-btn:active, .submit-btn:hover {
   background-color: var(--secondary-color);
+}
+.answer-box {
+  display: flex;
+  flex-wrap: nowrap;
+  margin: auto 600px;
+  font-size: 28px;
+  width: 100%;
+  text-align: center;
 }
 
   @media (max-width: 690px) {
