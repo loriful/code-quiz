@@ -32,7 +32,9 @@ var timerEl = document.getElementById('clock');
 
 /////////////////////////////////////////////////////////////////////////////////////////
 function storeUser () {
+
     console.log("storeUser function");
+
 };  // end function storeUser
 
 function displayScores () {
@@ -40,15 +42,7 @@ function displayScores () {
 };  // end function displayScores
 
 function endQuiz () {
-    // console.log("In function endQuiz");
-    
-    // display final score
-    // check for > 0
-    // if true build final screen & prompt for initials
-    // On submit click, store score and initials in local store
-    // display high scores
 
-   // clip last screen
     document.querySelector("#quiz-next").remove();          // clear last quiz screen
 
     if (timer > 0) {                                    // user has points
@@ -62,8 +56,8 @@ function endQuiz () {
                                                         // build the screen elements
     lastQuiz.innerHTML = "<h1>All Done!</h1>" + 
     "<p>Your final score is: " + displayScores() + "<br><br>Enter your initials:</p>"
-      + "<div class=btn-box><button class='submit-btn' id='submit-btn' type='button'>Submit</button></div>";   
-      
+      + "<div class=btn-box><button class='submit-btn' id='submit-btn' type='submit'>Submit</button></div>";   
+     
     document.getElementById("quiz-box").appendChild(lastQuiz);   // display 
   
     displayTime(0);
